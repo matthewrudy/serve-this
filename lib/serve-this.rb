@@ -43,7 +43,7 @@ module ServeThis
     end
   
     # prohibit showing system files
-    FORBIDDEN = %w( /.git /.gitignore /config.ru )
+    FORBIDDEN = %w( /.git /.gitignore /config.ru /Gemfile /Gemfile.lock )
 
     def forbid?(path)
       unescaped_path = ::Rack::Utils.unescape(path)
