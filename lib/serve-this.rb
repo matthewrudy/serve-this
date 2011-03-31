@@ -6,6 +6,9 @@ module ServeThis
       use ::Rack::ConditionalGet
       use ::Rack::ETag
       
+      # we respond to HEAD requests
+      use ::Rack::Head
+      
       app = ServeThis::App.new(root)
       run app
     end.to_app
