@@ -1,3 +1,5 @@
 require 'rubygems'
-require 'serve-this'
+require 'bundler'
+Bundler.require
+
 run ServeThis.from(Dir.pwd)
