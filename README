@@ -1,0 +1,25 @@
+serve-this
+==========
+
+Serve the contents of the current directory,
+like it was running on a server.
+
+Example
+=======
+
+  $ serve-this
+  *****
+  serving ~/some/directory on port 9292
+
+Push it to Heroku!
+==================
+
+  config.ru
+
+    require 'serve-this'
+    run ServeThis.from(Dir.pwd)
+
+Note
+====
+
+this doesnt work yet!
