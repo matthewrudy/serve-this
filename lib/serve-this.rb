@@ -30,12 +30,16 @@ module ServeThis
       else
 
         # if we are looking at / lets try index.html
-        if path == "/" && File.exist?(File.join(self.root,"index.html"))
+        if path == "/" && exists?("index.html")
           env["PATH_INFO"] = "/index.html"
         end
   
         self.file_server.call(env)
       end
+    end
+    
+    def exists?(path)
+      File.exist?(File.join(self.root, path))
     end
   
     # prohibit showing system files
