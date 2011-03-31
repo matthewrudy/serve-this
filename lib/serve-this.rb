@@ -43,18 +43,17 @@ module ServeThis
     end
   
     # prohibit showing system files
-    FORBIDDEN = %w( .git .gitignore config.ru Gemfile Gemfile.lock )
+    FORBIDDEN_REGEXP = /^(\.|config.ru$|Gemfile$|Gemfile.lock$)/i
 
     def forbid?(path)
       unescaped_path = ::Rack::Utils.unescape(path)
       if unescaped_path.start_with?("/")
         unescaped_path = unescaped_path[1..-1]
       end
-      FORBIDDEN.any? do |forbidden_path|
-        unescaped_path.start_with?(forbidden_path)
-      end
+      
+      unescaped_path =~ FORBIDDEN_REGEXP
     end
-  
+    
     def forbid!
       self.file_server.forbidden
     end
