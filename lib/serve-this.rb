@@ -46,8 +46,9 @@ module ServeThis
     FORBIDDEN = %w( /.git /.gitignore /config.ru )
 
     def forbid?(path)
+      unescaped_path = ::Rack::Utils.unescape(path)
       FORBIDDEN.any? do |forbidden_path|
-        path.start_with?(forbidden_path)
+        unescaped_path.start_with?(forbidden_path)
       end
     end
   
