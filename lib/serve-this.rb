@@ -52,11 +52,7 @@ module ServeThis
     end
   
     def forbid!
-      body = "Forbidden\n"
-      size = Rack::Utils.bytesize(body)
-      return [403, {"Content-Type" => "text/plain",
-        "Content-Length" => size.to_s,
-        "X-Cascade" => "pass"}, [body]]
+      self.file_server.forbidden
     end
   end
   
