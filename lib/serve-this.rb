@@ -1,4 +1,6 @@
 module ServeThis
+  
+  VERSION = "0.0.2"
 
   def self.from(root)
     Rack::Builder.new do

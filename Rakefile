@@ -1,6 +1,8 @@
 require "rubygems"
 require "rake/gempackagetask"
 
+require 'lib/serve-this'
+
 # This builds the actual gem. For details of what all these options
 # mean, and other ones you can add, check the documentation here:
 #
@@ -10,7 +12,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "serve-this"
-  s.version           = "0.0.2"
+  s.version           = ServeThis::VERSION
   s.summary           = "Serve files from the current directory"
   s.author            = "Matthew Rudy Jacobs"
   s.email             = "MatthewRudyJacobs@gmail.com"
