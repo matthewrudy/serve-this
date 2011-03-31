@@ -10,7 +10,7 @@ spec = Gem::Specification.new do |s|
 
   # Change these as appropriate
   s.name              = "serve-this"
-  s.version           = "0.0.1"
+  s.version           = "0.0.2"
   s.summary           = "Serve files from the current directory"
   s.author            = "Matthew Rudy Jacobs"
   s.email             = "MatthewRudyJacobs@gmail.com"
