@@ -1,42 +1,56 @@
-class ServeThis
+module ServeThis
 
-  def initialize(root)
-    @root = root
-    @file_server = ::Rack::File.new(root)
+  def self.from(root)
+    Rack::Builder.new do
+      # ensure we use etags
+      use ::Rack::ConditionalGet
+      use ::Rack::ETag
+      
+      app = ServeThis::App.new(root)
+      run app
+    end.to_app
   end
-  attr_reader :root, :file_server
+  
+  # this does the file serving
+  class App
+    def initialize(root)
+      @root = root
+      @file_server = ::Rack::File.new(root)
+    end
+    attr_reader :root, :file_server
 
-  def call(env)
-    path = env["PATH_INFO"]
+    def call(env)
+      path = env["PATH_INFO"]
     
-    if forbid?(path)
-      forbid!
-    else
+      if forbid?(path)
+        forbid!
+      else
 
-      # if we are looking at / lets try index.html
-      if path == "/" && File.exist?(File.join(self.root,"index.html"))
-        env["PATH_INFO"] = "/index.html"
+        # if we are looking at / lets try index.html
+        if path == "/" && File.exist?(File.join(self.root,"index.html"))
+          env["PATH_INFO"] = "/index.html"
+        end
+  
+        self.file_server.call(env)
       end
-  
-      self.file_server.call(env)
     end
-  end
   
-  # prohibit showing system files
-  FORBIDDEN = %w( /.git /.gitignore /config.ru )
+    # prohibit showing system files
+    FORBIDDEN = %w( /.git /.gitignore /config.ru )
 
-  def forbid?(path)
-    FORBIDDEN.any? do |forbidden_path|
-      path.start_with?(forbidden_path)
+    def forbid?(path)
+      FORBIDDEN.any? do |forbidden_path|
+        path.start_with?(forbidden_path)
+      end
     end
-  end
   
-  def forbid!
-    body = "Forbidden\n"
-    size = Rack::Utils.bytesize(body)
-    return [403, {"Content-Type" => "text/plain",
-      "Content-Length" => size.to_s,
-      "X-Cascade" => "pass"}, [body]]
+    def forbid!
+      body = "Forbidden\n"
+      size = Rack::Utils.bytesize(body)
+      return [403, {"Content-Type" => "text/plain",
+        "Content-Length" => size.to_s,
+        "X-Cascade" => "pass"}, [body]]
+    end
   end
   
 end
