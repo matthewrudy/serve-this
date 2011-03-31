@@ -1,5 +1,4 @@
-ROOT = File.expand_path(File.dirname(__FILE__))
-
+# ensure we use etags
 use ::Rack::ConditionalGet
 use ::Rack::ETag
 
@@ -8,7 +7,7 @@ class ServeThis
 
   def initialize(root)
     @root = root
-    @file_server = ::Rack::File.new(ROOT)
+    @file_server = ::Rack::File.new(root)
   end
   attr_reader :root, :file_server
 
@@ -47,6 +46,6 @@ class ServeThis
   
 end
 
-app = ServeThis.new(ROOT)
+app = ServeThis.new(Dir.pwd)
 
 run app
