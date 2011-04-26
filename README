@@ -10,13 +10,26 @@ Example
   $ serve-this
   *****
   serving ~/some/directory on port 9292
+  
+  $ serve-this --rackup
+  *****
+  creating a Gemfile and config.ru
+  this directory is now a rack app!
 
 Push it to Heroku!
 ==================
 
+  Gemfile
+  
+    source :rubygems
+    gem "serve-this"
+    
   config.ru
 
-    require 'serve-this'
+    require 'rubygems'
+    require 'bundler'
+    Bundler.require
+
     run ServeThis.from(Dir.pwd)
 
 Note
