@@ -23,8 +23,11 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README)
 
   # Add any extra files to include in the gem
-  s.files             = %w(README) + Dir.glob("{lib}/**/*")
+  s.files             = %w(README) + Dir.glob("{lib, bin}/**/*")
   s.require_paths     = ["lib"]
+  
+  s.bindir          = 'bin'
+  s.executables     << 'serve-this'
   
   s.add_dependency("rack")
 
