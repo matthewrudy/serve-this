@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require 'serve-this'
+app = ServeThis.from(Dir.pwd)
+
+require 'rack'
+server = Rack::Server.start(:app => app)
