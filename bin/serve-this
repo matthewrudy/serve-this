@@ -4,4 +4,7 @@ require 'serve-this'
 app = ServeThis.from(Dir.pwd)
 
 require 'rack'
-server = Rack::Server.start(:app => app)
+
+puts "serve-this - http://localhost:1337"
+server = Rack::Server.start(:app => app, :Port => 1337)
+
