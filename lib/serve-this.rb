@@ -36,8 +36,10 @@ module ServeThis
         # if we are looking at / lets try index.html
         if path == "/" && exists?("index.html")
           env["PATH_INFO"] = "/index.html"
+        elsif !exists?(path) && exists?(path+".html")
+          env["PATH_INFO"] += ".html"
         end
-  
+        
         self.file_server.call(env)
       end
     end
