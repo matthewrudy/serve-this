@@ -29,7 +29,7 @@ spec = Gem::Specification.new do |s|
   s.bindir          = 'bin'
   s.executables     << 'serve-this'
   
-  s.add_dependency("rack")
+  s.add_dependency("rack", ">= 1.2.0")
 
   # If your tests use any gems, include them here
   # s.add_development_dependency("mocha") # for example
