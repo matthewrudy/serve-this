@@ -23,8 +23,11 @@ module ServeThis
     def initialize(root)
       @root = root
       @file_server = ::Rack::File.new(root)
+      
+      res_path = ::File.join(::File.dirname(__FILE__), "..", "res")
+      @res_server  = ::Rack::File.new(::File.expand_path(res_path))
     end
-    attr_reader :root, :file_server
+    attr_reader :root, :file_server, :res_server
 
     def call(env)
       path = env["PATH_INFO"]
@@ -36,6 +39,8 @@ module ServeThis
         # if we are looking at / lets try index.html
         if path == "/" && exists?("index.html")
           env["PATH_INFO"] = "/index.html"
+        elsif path == "/favicon.ico" && !exists?("favicon.ico")
+          return self.res_server.call(env)
         elsif !exists?(path) && exists?(path+".html")
           env["PATH_INFO"] += ".html"
         end
