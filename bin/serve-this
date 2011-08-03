@@ -1,10 +1,14 @@
 #!/usr/bin/env ruby
 
 require 'serve-this'
-app = ServeThis.from(Dir.pwd)
+root = Dir.pwd
+app = ServeThis.from(root)
 
 require 'rack'
 
-puts "serve-this - http://localhost:1337"
+puts "*****"
+puts "serving #{root} on port 1337"
+puts "http://localhost:1337"
+puts "*****"
 server = Rack::Server.start(:app => app, :Port => 1337)
 
