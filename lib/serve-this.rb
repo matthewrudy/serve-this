@@ -5,7 +5,7 @@ require 'serve-this/version'
 module ServeThis
 
   def self.from(root)
-    Rack::Builder.new do
+    Rack::Builder.app do
       # ensure we use etags
       use ::Rack::ConditionalGet
       use ::Rack::ETag
@@ -13,9 +13,8 @@ module ServeThis
       # we respond to HEAD requests
       use ::Rack::Head
       
-      app = ServeThis::App.new(root)
-      run app
-    end.to_app
+      run ServeThis::App.new(root)
+    end
   end
   
   # this does the file serving
