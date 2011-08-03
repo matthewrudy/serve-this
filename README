@@ -9,9 +9,9 @@ Example
 
   $ serve-this
   *****
-  serving ~/some/directory on port 9292
+  serving ~/some/directory on port 1337
   
-  $ serve-this --rackup
+  $ serve-this --rackup ++++
   *****
   creating a Gemfile and config.ru
   this directory is now a rack app!
@@ -32,7 +32,7 @@ Push it to Heroku!
 
     run ServeThis.from(Dir.pwd)
 
-Note
-====
+Notes
+=====
 
-this doesnt work yet!
+++++ this doesnt work yet!
