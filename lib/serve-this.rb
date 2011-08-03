@@ -66,7 +66,17 @@ module ServeThis
     end
     
     def forbid!
-      self.file_server.forbidden
+      body = "Forbidden\n"
+      status = 403
+      [
+        status,
+        {
+          "Content-Type" => "text/plain",
+          "Content-Length" => body.size.to_s,
+          "X-Cascade" => "pass"
+        },
+        [body]
+      ]
     end
   end
   
