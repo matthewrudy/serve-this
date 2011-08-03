@@ -1,3 +1,5 @@
 pkg
 example/.bundle
 example/Gemfile.lock
+coverage
+Gemfile.lock

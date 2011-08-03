@@ -50,7 +50,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README)
 
   # Add any extra files to include in the gem
-  s.files             = %w(README) + Dir.glob("{lib, bin}/**/*")
+  s.files             = %w(README) + Dir.glob("{lib, bin, res}/**/*")
   s.require_paths     = ["lib"]
   
   s.bindir          = 'bin'
@@ -59,7 +59,8 @@ spec = Gem::Specification.new do |s|
   s.add_dependency("rack", ">= 1.2.0")
 
   # If your tests use any gems, include them here
-  # s.add_development_dependency("mocha") # for example
+  s.add_development_dependency("mocha")
+  s.add_development_dependency("rcov")
 end
 
 # This task actually builds the gem. We also regenerate a static
