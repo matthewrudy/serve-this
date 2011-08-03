@@ -8,6 +8,18 @@ class ServeThisTest < ActiveSupport::TestCase
     @app = ServeThis::App.new(@example_dir)
   end
   
+  test "from - returns an app" do
+    rack1 = ServeThis.from(@example_dir)
+    rack2 = rack1.instance_eval("@app")
+    rack3 = rack2.instance_eval("@app")
+    rack4 = rack3.instance_eval("@app")
+    assert_instance_of Rack::ConditionalGet, rack1
+    assert_instance_of Rack::ETag, rack2
+    assert_instance_of Rack::Head, rack3
+    assert_instance_of ServeThis::App, rack4
+    assert_equal @example_dir, rack4.root
+  end
+  
   test "/ -> index.html" do
     resolves_to("/index.html", "/")
   end
@@ -18,6 +30,10 @@ class ServeThisTest < ActiveSupport::TestCase
   
   test "/nofile -> unchanged" do
     resolves_to("/nofile", "/nofile")
+  end
+  
+  test "/Gemfile -> forbidden!" do
+    assert_forbidden call("/Gemfile")
   end
   
   test "favicon - bundled if not present" do
@@ -76,10 +92,7 @@ class ServeThisTest < ActiveSupport::TestCase
   end
   
   test "forbid! - is an http forbidden" do
-    assert_equal [
-      403,
-     {"X-Cascade"=>"pass", "Content-Type"=>"text/plain", "Content-Length"=>"10"},
-     ["Forbidden\n"]], @app.forbid!
+    assert_forbidden @app.forbid!
   end
   
   protected
@@ -96,5 +109,12 @@ class ServeThisTest < ActiveSupport::TestCase
     call(path)
   end
   
+  def assert_forbidden(response)
+    assert_equal [
+      403,
+      {"X-Cascade"=>"pass", "Content-Type"=>"text/plain", "Content-Length"=>"10"},
+      ["Forbidden\n"]
+      ], response
+  end
 end
   
