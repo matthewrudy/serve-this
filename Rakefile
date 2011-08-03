@@ -1,7 +1,19 @@
 require "rubygems"
 require "rake/gempackagetask"
+require "rake/testtask"
 
 require 'lib/serve-this'
+
+desc 'Default: run unit tests.'
+task :default => :test
+
+desc 'Test ServeThis.'
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/**/*_test.rb'
+  t.verbose = true
+end
 
 # This builds the actual gem. For details of what all these options
 # mean, and other ones you can add, check the documentation here:
