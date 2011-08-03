@@ -50,7 +50,7 @@ spec = Gem::Specification.new do |s|
   s.rdoc_options      = %w(--main README)
 
   # Add any extra files to include in the gem
-  s.files             = %w(README) + Dir.glob("{lib, bin, res}/**/*")
+  s.files             = %w(README) + `git ls-files`.split.select{|l| l=~ /^(bin|lib|res)/}
   s.require_paths     = ["lib"]
   
   s.bindir          = 'bin'
