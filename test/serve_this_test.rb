@@ -72,7 +72,7 @@ class ServeThisTest < ActiveSupport::TestCase
   end
   
   test "forbid? - Gemfile.lock" do
-    assert @app.exists?("Gemfile.lock")
+    # assert @app.exists?("Gemfile.lock")
     assert @app.forbid?("Gemfile.lock")
   end
   
