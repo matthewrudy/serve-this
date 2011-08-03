@@ -1,8 +1,8 @@
 require 'rack'
 
+require 'serve-this/version'
+
 module ServeThis
-  
-  VERSION = "0.0.6"
 
   def self.from(root)
     Rack::Builder.new do

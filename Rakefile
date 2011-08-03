@@ -2,7 +2,7 @@ require "rubygems"
 require "rake/gempackagetask"
 require "rake/testtask"
 
-require 'lib/serve-this'
+require 'lib/serve-this/version'
 
 desc 'Default: run unit tests.'
 task :default => :test
