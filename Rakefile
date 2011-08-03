@@ -15,6 +15,21 @@ Rake::TestTask.new(:test) do |t|
   t.verbose = true
 end
 
+require 'rcov/rcovtask'
+Rcov::RcovTask.new(:coverage) do |t|
+  t.libs << "test"
+  t.test_files = Dir["test/**/*_test.rb"]
+  t.rcov_opts = ["--html", "--exclude '^(?!(lib))'"]
+end
+
+task :coverage do
+  if defined?(RUBY_PLATFORM) && RUBY_PLATFORM['darwin']
+    system("open coverage/index.html")
+  else
+    puts "coverage created. open coverage/index.html in a web browser"
+  end
+end
+
 # This builds the actual gem. For details of what all these options
 # mean, and other ones you can add, check the documentation here:
 #
