@@ -42,6 +42,8 @@ module ServeThis
           return self.res_server.call(env)
         elsif !exists?(path) && exists?(path+".html")
           env["PATH_INFO"] += ".html"
+        elsif exists?(path) && directory?(path) && exists?(File.join(path, "index.html"))
+          env["PATH_INFO"] += "/index.html"
         end
         
         self.file_server.call(env)
@@ -50,6 +52,10 @@ module ServeThis
     
     def exists?(path)
       File.exist?(File.join(self.root, path))
+    end
+    
+    def directory?(path)
+      File.directory?(File.join(self.root, path))
     end
   
     # prohibit showing system files

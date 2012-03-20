@@ -28,6 +28,14 @@ class ServeThisTest < ActiveSupport::TestCase
     resolves_to("/index.html", "/index")
   end
   
+  test "/subdir -> /subdir/index.html" do
+    resolves_to("/subdir/index.html", "/subdir")
+  end
+  
+  test "/subdir/ -> /subdir/index.html" do
+    resolves_to("/subdir/index.html", "/subdir/")
+  end
+  
   test "/nofile -> unchanged" do
     resolves_to("/nofile", "/nofile")
   end
